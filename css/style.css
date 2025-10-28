@@ -34,6 +34,59 @@
 html {
     scroll-behavior: smooth;
     scroll-padding-top: 5rem;
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Prevent font scaling in landscape while allowing user zoom */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+    html {
+        -webkit-text-size-adjust: none;
+    }
+}
+
+/* Prevent content from moving when mobile navigation is toggled */
+body {
+    position: relative;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+/* Disable pull-to-refresh on mobile */
+body.overflow-hidden {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Improve tap targets for mobile */
+a, button, input, textarea, select, label {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+/* Disable hover effects on touch devices */
+@media (hover: none) {
+    .hover\:bg-gray-100:hover {
+        background-color: transparent;
+    }
+    .hover\:text-green-600:hover {
+        color: inherit;
+    }
+}
+
+/* Responsive base font size */
+@media (max-width: 768px) {
+    html {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    html {
+        font-size: 14px;
+    }
 }
 
 body {
@@ -59,7 +112,7 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0.75rem 1.75rem;
+    padding: 0.75rem 1.5rem;
     border-radius: 0.5rem;
     font-weight: 500;
     text-align: center;
@@ -70,6 +123,15 @@ body {
     z-index: 1;
     border: none;
     box-shadow: var(--shadow-sm);
+    font-size: 0.9rem;
+    min-width: 120px;
+}
+
+@media (min-width: 768px) {
+    .btn {
+        padding: 0.75rem 1.75rem;
+        min-width: 140px;
+    }
 }
 
 .btn::after {
@@ -132,15 +194,150 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
+    line-height: 1.1;
 }
 
 h2 {
-    font-size: 2rem;
+    font-size: 1.75rem;
+    line-height: 1.2;
 }
 
 h3 {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
+    line-height: 1.3;
+}
+
+/* Responsive Typography */
+@media (min-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+    
+    h2 {
+        font-size: 2rem;
+    }
+    
+    h3 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Adjust font sizes for smaller devices */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.75rem;
+        line-height: 1.2;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+        line-height: 1.25;
+    }
+    
+    h3 {
+        font-size: 1.25rem;
+        line-height: 1.3;
+    }
+    
+    p, li, a, button, input, textarea {
+        font-size: 0.9375rem; /* 15px */
+    }
+}
+
+/* Adjust line heights for better readability on mobile */
+p, li, .text-base, .text-lg {
+    line-height: 1.6;
+}
+
+@media (max-width: 480px) {
+    p, li, .text-base, .text-lg {
+        line-height: 1.5;
+    }
+}
+
+/* Responsive Images */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Form Elements */
+input,
+button,
+select,
+textarea {
+    font-size: 16px; /* Prevent iOS zoom on focus */
+}
+
+/* Touch Targets */
+a,
+button,
+[role="button"],
+input[type="submit"],
+input[type="button"],
+input[type="reset"] {
+    min-height: 44px;
+    min-width: 44px;
+}
+
+/* Responsive Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Responsive Embeds */
+.embed-responsive {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 0;
+    overflow: hidden;
+}
+
+.embed-responsive::before {
+    display: block;
+    content: "";
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+}
+
+.embed-responsive iframe,
+.embed-responsive embed,
+.embed-responsive object,
+.embed-responsive video {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+/* Print Styles */
+@media print {
+    *,
+    *::before,
+    *::after {
+        background: transparent !important;
+        color: #000 !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+    
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+    
+    a[href]::after {
+        content: " (" attr(href) ")";
+    }
+    
+    .no-print {
+        display: none !important;
+    }
 }
 
 p {
@@ -170,6 +367,91 @@ a:hover {
     transition: all var(--transition-medium);
     transform: translateY(0);
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    padding: 0.5rem 0;
+}
+
+/* Mobile Menu Styles */
+#mobile-menu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    background: white;
+    position: fixed;
+    width: 100%;
+    left: 0;
+    right: 0;
+    top: 84px; /* Adjust based on your header height */
+    bottom: 0;
+    z-index: 40;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transform: translateY(-10px);
+    will-change: transform, opacity;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0.5rem 0;
+    margin: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+#mobile-menu.active {
+    max-height: calc(100vh - 84px); /* Adjust based on header height */
+    opacity: 1;
+    transform: translateY(0);
+    padding: 0.5rem 0;
+}
+
+/* Adjust for devices with notches */
+@supports (padding: max(0px)) {
+    #mobile-menu {
+        padding-left: max(1rem, env(safe-area-inset-left));
+        padding-right: max(1rem, env(safe-area-inset-right));
+    }
+}
+
+/* Hide scrollbar for mobile menu but keep it scrollable */
+#mobile-menu::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    background: transparent;
+}
+
+#mobile-menu {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Adjust for landscape mode on mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+    #mobile-menu {
+        max-height: 70vh;
+        top: auto;
+        bottom: 0;
+        border-radius: 0.75rem 0.75rem 0 0;
+    }
+}
+
+#mobile-menu a {
+    display: block;
+    padding: 0.75rem 1.5rem;
+    color: #374151;
+    transition: all 0.2s ease;
+}
+
+#mobile-menu a:hover {
+    background-color: #f3f4f6;
+    color: var(--primary);
+    padding-left: 2rem;
+}
+
+#mobile-menu-button {
+    padding: 0.5rem;
+    margin-right: -0.5rem;
+    transition: transform 0.3s ease;
+}
+
+#mobile-menu-button.active {
+    transform: rotate(90deg);
 }
 
 .navbar.hidden {
@@ -209,14 +491,72 @@ a:hover {
 /* Hero Section */
 .hero {
     position: relative;
-    padding: 8rem 0 6rem;
+    padding: 6rem 0 4rem;
     background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
     color: white;
+    min-height: auto;
     overflow: hidden;
-    min-height: 100vh;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    
+    /* Ensure content is visible above any pseudo-elements */
+    z-index: 1;
+    
+    /* Adjust for mobile viewport units */
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    
+    /* Prevent content from being hidden by browser UI */
+    padding-top: calc(env(safe-area-inset-top, 0px) + 2rem);
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 4rem);
+    padding-left: env(safe-area-inset-left, 1rem);
+    padding-right: env(safe-area-inset-right, 1rem);
+    
+    /* Smooth scrolling for iOS */
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Fix for mobile viewport height units */
+@supports (-webkit-touch-callout: none) {
+    .hero {
+        /* The hack for Safari */
+        height: -webkit-fill-available;
+    }
+}
+
+/* Adjust hero content for mobile */
+.hero-content {
     position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Hero carousel adjustments */
+#hero-carousel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+/* Ensure carousel slides take full height */
+#hero-carousel > div {
+    height: 100%;
+}
+
+@media (min-width: 768px) {
+    .hero {
+        padding: 8rem 0 6rem;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+    }
 }
 
 .hero::before {
